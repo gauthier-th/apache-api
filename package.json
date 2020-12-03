@@ -4,6 +4,7 @@
   "description": "A simple Apache wrapper for Node.js.",
   "main": "src/index.js",
   "scripts": {
+    "build:ts": "npx typescript src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
