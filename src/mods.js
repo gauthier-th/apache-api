@@ -5,31 +5,33 @@ const { execCommand } = require('./utils');
  * Show Apache available mods
  * @returns {Promise<string[]>}
  */
-module.exports.listAvailable = function() {
+function listAvailable() {
 	return fs.readdir('/etc/apache2/mods-available/').then(result => {
 		return [...(new Set(
 			result.map(mod => mod.replace(/\.(conf|load)$/i, '').toLowerCase())
 		))];
 	});
 }
+module.exports.listAvailable = listAvailable;
 /**
  * Show Apache enabled mods
  * @returns {Promise<string[]>}
  */
-module.exports.listEnabled = function() {
+function listEnabled() {
 	return fs.readdir('/etc/apache2/mods-enabled/').then(result => {
 		return [...(new Set(
 			result.map(mod => mod.replace(/\.(conf|load)$/i, '').toLowerCase())
 		))];
 	});
 }
+module.exports.listEnabled = listEnabled;
 
 /**
  * Enable an Apache mod
  * @param {string} mod 
  * @returns {Promise<>}
  */
-module.exports.enable = function(mod) {
+function enable(mod) {
 	return new Promise((resolve, reject) => {
 		execCommand('a2enmod ' + mod).then(() => {
 			resolve();
@@ -41,12 +43,13 @@ module.exports.enable = function(mod) {
 		});
 	});
 }
+module.exports.enable = enable;
 /**
  * Disable an Apache mod
  * @param {string} mod 
  * @returns {Promise<>}
  */
-module.exports.disable = function(mod) {
+function disable(mod) {
 	return new Promise((resolve, reject) => {
 		execCommand('a2dismod ' + mod).then(() => {
 			resolve();
@@ -58,3 +61,4 @@ module.exports.disable = function(mod) {
 		});
 	});
 }
+module.exports.disable = disable;

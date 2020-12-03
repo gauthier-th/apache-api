@@ -8,31 +8,33 @@ const { parse, serialize } = require('./parser');
  * Show Apache available configs
  * @returns {Promise<string[]>}
  */
-module.exports.listAvailable = function() {
+function listAvailable() {
 	return fs.readdir('/etc/apache2/conf-available/').then(result => {
 		return [...(new Set(
 			result.map(mod => mod.replace(/\.conf$/i, '').toLowerCase())
 		))];
 	});
 }
+module.exports.listAvailable;
 /**
  * Show Apache enabled configs
  * @returns {Promise<string[]>}
  */
-module.exports.listEnabled = function() {
+function listEnabled() {
 	return fs.readdir('/etc/apache2/conf-enabled/').then(result => {
 		return [...(new Set(
 			result.map(mod => mod.replace(/\.conf$/i, '').toLowerCase())
 		))];
 	});
 }
+module.exports.listAvailable = listAvailable;
 
 /**
  * Enable an Apache config
  * @param {string} config 
  * @returns {Promise<>}
  */
-module.exports.enable = function(config) {
+function enable(config) {
 	return new Promise((resolve, reject) => {
 		execCommand('a2enconf ' + config).then(() => {
 			resolve();
@@ -44,12 +46,13 @@ module.exports.enable = function(config) {
 		});
 	});
 }
+module.exports.enable = enable;
 /**
  * Disable an Apache config
  * @param {string} config 
  * @returns {Promise<>}
  */
-module.exports.disable = function(config) {
+function disable(config) {
 	return new Promise((resolve, reject) => {
 		execCommand('a2disconf ' + config).then(() => {
 			resolve();
@@ -61,6 +64,7 @@ module.exports.disable = function(config) {
 		});
 	});
 }
+module.exports.disable = disable;
 
 /**
  * Read and parse (optionnal) a config
@@ -68,13 +72,14 @@ module.exports.disable = function(config) {
  * @param {boolean} parseContent 
  * @returns {object|string}
  */
-module.exports.readConfig = async function(config, parseContent = true) {
+async function readConfig(config, parseContent = true) {
 	const content = await fs.readFile(path.join('/etc/apache2/conf-available/', config.replace(/\.conf$/i, '') + '.conf'));
 	if (parseContent)
 		return parse(content);
 	else
 		return content;
 }
+module.exports.readConfig = readConfig;
 
 /**
  * Save and parse (optionnal) a config
@@ -82,6 +87,7 @@ module.exports.readConfig = async function(config, parseContent = true) {
  * @param {boolean} fromParsed 
  * @returns {Promise}
  */
-module.exports.saveConfig = async function(config, fromParsed = true) {
+async function saveConfig(config, fromParsed = true) {
 	return fs.writeFile(path.join('/etc/apache2/conf-available/', config.replace(/\.conf$/i, '') + '.conf'), fromParsed ? serialize(content) : content);
 }
+module.exports.saveConfig = saveConfig;

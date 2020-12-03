@@ -3,30 +3,34 @@ const { execCommand } = require("../utils");
 /**
  * @returns {Promise<string>}
  */
-module.exports.startApache = function() {
+function startApache() {
 	return systemctl('start');
 }
+module.exports.startApache = startApache;
 
 /**
  * @returns {Promise<string>}
  */
-module.exports.stopApache = function() {
+function stopApache() {
 	return systemctl('stop');
 }
+module.exports.stopApache = stopApache;
 
 /**
  * @returns {Promise<string>}
  */
-module.exports.restartApache = function() {
+function restartApache() {
 	return systemctl('restart');
 }
+module.exports.restartApache = restartApache;
 
 /**
  * @returns {Promise<string>}
  */
-module.exports.statusApache = function() {
+function statusApache() {
 	return systemctl('status');
 }
+module.exports.statusApache = statusApache;
 
 function systemctl(command) {
 	return execCommand(`systemctl ${command} apache2`).then(({ error, stdout, stderr }) => stdout);
