@@ -2,7 +2,7 @@ const fs = require('fs/promises');
 const { execCommand } = require('./utils');
 
 /**
- * Show Apache available mods
+ * Show available Apache mods.
  * @returns {Promise<string[]>}
  */
 function listAvailable() {
@@ -14,7 +14,7 @@ function listAvailable() {
 }
 module.exports.listAvailable = listAvailable;
 /**
- * Show Apache enabled mods
+ * Show enabled Apache mods.
  * @returns {Promise<string[]>}
  */
 function listEnabled() {
@@ -27,9 +27,9 @@ function listEnabled() {
 module.exports.listEnabled = listEnabled;
 
 /**
- * Enable an Apache mod
- * @param {string} mod 
- * @returns {Promise<>}
+ * Enable an Apache mod.
+ * @param {string} mod Mod to enable
+ * @returns {Promise<any>}
  */
 function enable(mod) {
 	return new Promise((resolve, reject) => {
@@ -45,9 +45,9 @@ function enable(mod) {
 }
 module.exports.enable = enable;
 /**
- * Disable an Apache mod
- * @param {string} mod 
- * @returns {Promise<>}
+ * Disable an Apache mod.
+ * @param {string} mod  Mod to disable
+ * @returns {Promise<any>}
  */
 function disable(mod) {
 	return new Promise((resolve, reject) => {

@@ -1,7 +1,13 @@
+/**
+ * Show Apache status, start, stop, and restart Apache service with systemctl.
+ * @module actions
+ */
+
 const { execCommand } = require("../utils");
 
 /**
- * @returns {Promise<string>}
+ * Start Apache service.
+ * @returns {Promise<any>}
  */
 function startApache() {
 	return systemctl('start');
@@ -9,7 +15,8 @@ function startApache() {
 module.exports.startApache = startApache;
 
 /**
- * @returns {Promise<string>}
+ * Stop Apache service.
+ * @returns {Promise<any>}
  */
 function stopApache() {
 	return systemctl('stop');
@@ -17,7 +24,8 @@ function stopApache() {
 module.exports.stopApache = stopApache;
 
 /**
- * @returns {Promise<string>}
+ * Restart Apache service.
+ * @returns {Promise<any>}
  */
 function restartApache() {
 	return systemctl('restart');
@@ -25,6 +33,7 @@ function restartApache() {
 module.exports.restartApache = restartApache;
 
 /**
+ * Returns a promise with the Apache service status.
  * @returns {Promise<string>}
  */
 function statusApache() {

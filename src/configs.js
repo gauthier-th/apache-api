@@ -5,7 +5,7 @@ const { execCommand } = require('./utils');
 const { parse, serialize } = require('./parser');
 
 /**
- * Show Apache available configs
+ * Show available Apache configs.
  * @returns {Promise<string[]>}
  */
 function listAvailable() {
@@ -15,9 +15,9 @@ function listAvailable() {
 		))];
 	});
 }
-module.exports.listAvailable;
+module.exports.listAvailable = listAvailable;
 /**
- * Show Apache enabled configs
+ * Show enabled Apache configs.
  * @returns {Promise<string[]>}
  */
 function listEnabled() {
@@ -27,12 +27,12 @@ function listEnabled() {
 		))];
 	});
 }
-module.exports.listAvailable = listAvailable;
+module.exports.listAvailable = listEnabled;
 
 /**
- * Enable an Apache config
- * @param {string} config 
- * @returns {Promise<>}
+ * Enable an Apache config.
+ * @param {string} config Config to enable
+ * @returns {Promise<any>}
  */
 function enable(config) {
 	return new Promise((resolve, reject) => {
@@ -48,9 +48,9 @@ function enable(config) {
 }
 module.exports.enable = enable;
 /**
- * Disable an Apache config
- * @param {string} config 
- * @returns {Promise<>}
+ * Disable an Apache config.
+ * @param {string} config Config to disable
+ * @returns {Promise<any>}
  */
 function disable(config) {
 	return new Promise((resolve, reject) => {
@@ -67,9 +67,9 @@ function disable(config) {
 module.exports.disable = disable;
 
 /**
- * Read and parse (optionnal) a config
- * @param {string} config 
- * @param {boolean} parseContent 
+ * Read and parse (optional) a config.
+ * @param {string} config Config to read
+ * @param {boolean} [parseContent] Wether to parse content
  * @returns {object|string}
  */
 async function readConfig(config, parseContent = true) {
@@ -82,10 +82,10 @@ async function readConfig(config, parseContent = true) {
 module.exports.readConfig = readConfig;
 
 /**
- * Save and parse (optionnal) a config
- * @param {object|string} config 
- * @param {boolean} fromParsed 
- * @returns {Promise}
+ * Parse (optional) and save a config.
+ * @param {object|string} config Config to save
+ * @param {boolean} [fromParsed] Wether to parse content
+ * @returns {Promise<any>}
  */
 async function saveConfig(config, fromParsed = true) {
 	return fs.writeFile(path.join('/etc/apache2/conf-available/', config.replace(/\.conf$/i, '') + '.conf'), fromParsed ? serialize(content) : content);
