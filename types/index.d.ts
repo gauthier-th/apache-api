@@ -8,12 +8,12 @@ declare function apacheApi(path?: string): {
         disable: (mod: string) => Promise<any>;
     };
     configs: {
-        listAvailable: () => Promise<string[]>;
-        listEnabled: () => Promise<string[]>;
-        enable: (config: string) => Promise<any>;
-        disable: (config: string) => Promise<any>;
-        readConfig: (config: string, parseContent?: boolean) => any;
-        saveConfig: (config: any, fromParsed?: boolean) => Promise<any>;
+        listAvailable: (sites?: boolean) => Promise<string[]>;
+        listEnabled: (sites?: boolean) => Promise<string[]>;
+        enable: (config: string, sites?: boolean) => Promise<any>;
+        disable: (config: string, sites?: boolean) => Promise<any>;
+        readConfig: (config: string, sites?: boolean, parseContent?: boolean) => any;
+        saveConfig: (config: any, sites?: boolean, fromParsed?: boolean) => Promise<any>;
     };
     parser: typeof parser;
 };
@@ -26,12 +26,12 @@ declare namespace apacheApi {
         disable: (mod: string) => Promise<any>;
     };
     export const configs: {
-        listAvailable: () => Promise<string[]>;
-        listEnabled: () => Promise<string[]>;
-        enable: (config: string) => Promise<any>;
-        disable: (config: string) => Promise<any>;
-        readConfig: (config: string, parseContent?: boolean) => any;
-        saveConfig: (config: any, fromParsed?: boolean) => Promise<any>;
+        listAvailable: (sites?: boolean) => Promise<string[]>;
+        listEnabled: (sites?: boolean) => Promise<string[]>;
+        enable: (config: string, sites?: boolean) => Promise<any>;
+        disable: (config: string, sites?: boolean) => Promise<any>;
+        readConfig: (config: string, sites?: boolean, parseContent?: boolean) => any;
+        saveConfig: (config: any, sites?: boolean, fromParsed?: boolean) => Promise<any>;
     };
     export { parser };
 }

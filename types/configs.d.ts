@@ -3,10 +3,10 @@ export = configs;
  * @param {string} apachePath
  */
 declare function configs(apachePath: string): {
-    listAvailable: () => Promise<string[]>;
-    listEnabled: () => Promise<string[]>;
-    enable: (config: string) => Promise<any>;
-    disable: (config: string) => Promise<any>;
-    readConfig: (config: string, parseContent?: boolean) => object | string;
-    saveConfig: (config: object | string, fromParsed?: boolean) => Promise<any>;
+    listAvailable: (sites?: boolean) => Promise<string[]>;
+    listEnabled: (sites?: boolean) => Promise<string[]>;
+    enable: (config: string, sites?: boolean) => Promise<any>;
+    disable: (config: string, sites?: boolean) => Promise<any>;
+    readConfig: (config: string, sites?: boolean, parseContent?: boolean) => object | string;
+    saveConfig: (config: object | string, sites?: boolean, fromParsed?: boolean) => Promise<any>;
 };

@@ -79,34 +79,44 @@ Disable an Apache mod.
 const { configs } = require('apache-api');
 ```
 
-### configs.listAvailable():  `Promise<string[]>`
+### configs.listAvailable([sites]):  `Promise<string[]>`
 Show available Apache configs.
+| Param | Type | Description |
+| --- | --- | --- |
+| sites | `boolean` | Wether to list sites folder |
 
-### configs.listEnabled():  `Promise<string[]>`
+### configs.listEnabled([sites]):  `Promise<string[]>`
 Show enabled Apache configs.
+| Param | Type | Description |
+| --- | --- | --- |
+| sites | `boolean` | Wether to list sites folder |
 
-### configs.enable(config):  `Promise<any>`
+### configs.enable(config, [sites]):  `Promise<any>`
 Enable an Apache config.
 | Param | Type | Description |
 | --- | --- | --- |
-| config| `string` | Config to enable |
+| config | `string` | Config to enable |
+| sites | `boolean` | Wether to enable sites folder |
 
-### configs.disable(config):  `Promise<any>`
+### configs.disable(config, [sites]):  `Promise<any>`
 Disable an Apache config.
 | Param | Type | Description |
 | --- | --- | --- |
-| config| `string` | Config to disable |
+| config | `string` | Config to disable |
+| sites | `boolean` | Wether to disable sites folder |
 
-### configs.readConfig(config, [parseContent]):  <code>Promise<object&#124;string></code>
+### configs.readConfig(config, [sites], [parseContent]):  <code>Promise<object&#124;string></code>
 Read and parse (optional) a config.
 | Param | Type | Description |
 | --- | --- | --- |
-| config| `string` | Config to read |
+| config | `string` | Config to read |
+| sites | `boolean` | Wether to use sites folder |
 | parseContent | `boolean` | Wether to parse content |
 
-### configs.saveConfig(config, [fromParsed]):  `Promise<any>`
+### configs.saveConfig(config, [sites], [fromParsed]):  `Promise<any>`
 Parse (optional) and save a config.
 | Param | Type | Description |
 | --- | --- | --- |
-| config| <code>object&#124;string</code> | Config to save |
+| config | <code>object&#124;string</code> | Config to save |
+| sites | `boolean` | Wether to use sites folder |
 | fromParsed | `boolean` | Wether to parse content |

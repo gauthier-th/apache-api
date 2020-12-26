@@ -10,10 +10,11 @@ const { parse, serialize } = require('./parser');
 function configs(apachePath) {
 	/**
 	 * Show available Apache configs.
+	 * @param {boolean} sites Wether to list sites folder
 	 * @returns {Promise<string[]>}
 	 */
-	function listAvailable() {
-		return fs.readdir(path.join(apachePath, 'conf-available/')).then(result => {
+	function listAvailable(sites = false) {
+		return fs.readdir(path.join(apachePath, sites ? 'sites-available/' : 'conf-available/')).then(result => {
 			return [...(new Set(
 				result.map(mod => mod.replace(/\.conf$/i, '').toLowerCase())
 			))];
@@ -21,10 +22,11 @@ function configs(apachePath) {
 	}
 	/**
 	 * Show enabled Apache configs.
+	 * @param {boolean} sites Wether to list sites folder
 	 * @returns {Promise<string[]>}
 	 */
-	function listEnabled() {
-		return fs.readdir(path.join(apachePath, 'conf-enabled/')).then(result => {
+	function listEnabled(sites = false) {
+		return fs.readdir(path.join(apachePath, sites ? 'sites-available/' : 'conf-available/')).then(result => {
 			return [...(new Set(
 				result.map(mod => mod.replace(/\.conf$/i, '').toLowerCase())
 			))];
@@ -34,15 +36,16 @@ function configs(apachePath) {
 	/**
 	 * Enable an Apache config.
 	 * @param {string} config Config to enable
+	 * @param {boolean} sites Wether to enable sites folder
 	 * @returns {Promise<any>}
 	 */
-	function enable(config) {
+	function enable(config, sites = false) {
 		return new Promise((resolve, reject) => {
-			execCommand('a2enconf ' + config).then(() => {
+			execCommand((sites ? 'a2ensite ' : 'a2enconf ') + config).then(() => {
 				resolve();
 			}).catch(error => {
-				if (error.toString().toLowerCase().includes(`conf ${config} does not exist!`))
-					reject(`Error: config ${config} does not exist!`);
+				if (error.toString().toLowerCase().includes(`${sites ? 'site' : 'config'} ${config} does not exist!`))
+					reject(`Error: ${sites ? 'site' : 'config'} ${config} does not exist!`);
 				else
 					reject(error.toString());
 			});
@@ -51,15 +54,16 @@ function configs(apachePath) {
 	/**
 	 * Disable an Apache config.
 	 * @param {string} config Config to disable
+	 * @param {boolean} sites Wether to disable sites folder
 	 * @returns {Promise<any>}
 	 */
-	function disable(config) {
+	function disable(config, sites = false) {
 		return new Promise((resolve, reject) => {
-			execCommand('a2disconf ' + config).then(() => {
+			execCommand((sites ? 'a2dissite ' : 'a2disconf ') + config).then(() => {
 				resolve();
 			}).catch(error => {
-				if (error.toString().toLowerCase().includes(`conf ${config} does not exist!`))
-					reject(`Error: config ${config} does not exist!`);
+				if (error.toString().toLowerCase().includes(`${sites ? 'site' : 'config'} ${config} does not exist!`))
+					reject(`Error: ${sites ? 'site' : 'config'} ${config} does not exist!`);
 				else
 					reject(error.toString());
 			});
@@ -69,11 +73,12 @@ function configs(apachePath) {
 	/**
 	 * Read and parse (optional) a config.
 	 * @param {string} config Config to read
+	 * @param {boolean} sites Wether to use sites folder
 	 * @param {boolean} [parseContent] Wether to parse content
 	 * @returns {object|string}
 	 */
-	async function readConfig(config, parseContent = true) {
-		const content = await fs.readFile(path.join(apachePath, 'conf-available/', config.replace(/\.conf$/i, '') + '.conf'));
+	async function readConfig(config, sites = false, parseContent = true) {
+		const content = await fs.readFile(path.join(apachePath, sites ? 'sites-available/' : 'conf-available/', config.replace(/\.conf$/i, '') + '.conf'));
 		if (parseContent)
 			return parse(content);
 		else
@@ -83,11 +88,12 @@ function configs(apachePath) {
 	/**
 	 * Parse (optional) and save a config.
 	 * @param {object|string} config Config to save
+	 * @param {boolean} sites Wether to use sites folder
 	 * @param {boolean} [fromParsed] Wether to parse content
 	 * @returns {Promise<any>}
 	 */
-	async function saveConfig(config, fromParsed = true) {
-		return fs.writeFile(path.join(apachePath, 'conf-available/', config.replace(/\.conf$/i, '') + '.conf'), fromParsed ? serialize(content) : content);
+	async function saveConfig(config, sites = false, fromParsed = true) {
+		return fs.writeFile(path.join(apachePath, sites ? 'sites-available/' : 'conf-available/', config.replace(/\.conf$/i, '') + '.conf'), fromParsed ? serialize(content) : content);
 	}
 
 	return {
