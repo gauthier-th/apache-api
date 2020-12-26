@@ -3,6 +3,16 @@ A simple Apache wrapper for Node.js.
 
 # API Reference
 
+## Initialization
+You can itialize the API with a special Apache path:
+```js
+const apacheApi = require('apache-api')('/usr/share/apache2/');
+```
+Or with the default one (`/etc/apache2/`):
+```js
+const apacheApi = require('apache-api');
+```
+
 ## Parser
 Functions to parse and serialize an Apache configuration file.
 ```js
@@ -75,13 +85,13 @@ Show available Apache configs.
 ### configs.listEnabled():  `Promise<string[]>`
 Show enabled Apache configs.
 
-### configs.enable(mod):  `Promise<any>`
+### configs.enable(config):  `Promise<any>`
 Enable an Apache config.
 | Param | Type | Description |
 | --- | --- | --- |
 | config| `string` | Config to enable |
 
-### configs.disable(mod):  `Promise<any>`
+### configs.disable(config):  `Promise<any>`
 Disable an Apache config.
 | Param | Type | Description |
 | --- | --- | --- |
