@@ -3,7 +3,7 @@
  * @module actions
  */
 
-const { execCommand } = require("../utils");
+const { execCommand } = require("./utils");
 
 /**
  * Start Apache service.
