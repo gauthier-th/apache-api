@@ -80,7 +80,7 @@ function configs(apachePath) {
 	async function readConfig(config, sites = false, parseContent = true) {
 		const content = await fs.readFile(path.join(apachePath, sites ? 'sites-available/' : 'conf-available/', config.replace(/\.conf$/i, '') + '.conf'));
 		if (parseContent)
-			return parse(content);
+			return parse(content.toString());
 		else
 			return content;
 	}
