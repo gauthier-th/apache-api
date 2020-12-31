@@ -26,7 +26,7 @@ function configs(apachePath) {
 	 * @returns {Promise<string[]>}
 	 */
 	function listEnabled(sites = false) {
-		return fs.readdir(path.join(apachePath, sites ? 'sites-available/' : 'conf-available/')).then(result => {
+		return fs.readdir(path.join(apachePath, sites ? 'sites-enabled/' : 'conf-enabled/')).then(result => {
 			return [...(new Set(
 				result.map(mod => mod.replace(/\.conf$/i, '').toLowerCase())
 			))];
