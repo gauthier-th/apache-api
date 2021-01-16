@@ -87,13 +87,14 @@ function configs(apachePath) {
 
 	/**
 	 * Parse (optional) and save a config.
-	 * @param {object|string} config Config to save
+	 * @param {string} config Config name
+	 * @param {object|string} content Config content
 	 * @param {boolean} sites Wether to use sites folder
 	 * @param {boolean} [fromParsed] Wether to parse content
 	 * @returns {Promise<any>}
 	 */
-	async function saveConfig(config, sites = false, fromParsed = true) {
-		return fs.writeFile(path.join(apachePath, sites ? 'sites-available/' : 'conf-available/', config.replace(/\.conf$/i, '') + '.conf'), fromParsed ? serialize(config) : config);
+	async function saveConfig(config, content, sites = false, fromParsed = true) {
+		return fs.writeFile(path.join(apachePath, sites ? 'sites-available/' : 'conf-available/', config.replace(/\.conf$/i, '') + '.conf'), fromParsed ? serialize(content) : content);
 	}
 
 	return {
