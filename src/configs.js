@@ -93,7 +93,7 @@ function configs(apachePath) {
 	 * @returns {Promise<any>}
 	 */
 	async function saveConfig(config, sites = false, fromParsed = true) {
-		return fs.writeFile(path.join(apachePath, sites ? 'sites-available/' : 'conf-available/', config.replace(/\.conf$/i, '') + '.conf'), fromParsed ? serialize(content) : content);
+		return fs.writeFile(path.join(apachePath, sites ? 'sites-available/' : 'conf-available/', config.replace(/\.conf$/i, '') + '.conf'), fromParsed ? serialize(config) : config);
 	}
 
 	return {
